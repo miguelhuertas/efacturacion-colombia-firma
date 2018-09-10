@@ -8,11 +8,11 @@
 
 ### Motivación
 
-Desde el 1 de enero del 2019 será obligatoria la facturación electrónica para los contribuyentes en Colombia, y en la actualidad muchas empresas y personas obligadas no la han implementado. 
+Desde el 1 de enero del 2019 la facturación electrónica para los contribuyentes en Colombia será obligatoria, y en la actualidad muchas empresas y personas obligadas no la han implementado. 
 
-Aunque la información técnica proveída por la DIAN debería ser suficiente, encontrar recursos en .NET para este proceso es bastante difícil. La generación de estructuras XML y consumo de servicios web puede ser laborioso pero se puede hacer sin inconvenientes, en cambio la firma requerida por la DIAN puede ser extremadamente difícil de hacer, hasta el punto de ser necesario adquirir soluciones costosas.
+Aunque la información técnica proveída por la DIAN debería ser suficiente, encontrar recursos en .NET para este proceso resulta ser bastante difícil. La generación de documentos XML y consumo de servicios web puede ser laborioso pero se puede hacer sin inconvenientes, en cambio la firma requerida por la DIAN puede ser extremadamente difícil de hacer, hasta el punto de ser necesario adquirir soluciones costosas.
 
-Se libera esta librería con el fin de ayudar a implementar la facturación electrónica en ambientes .NET, sin necesidad de comprar soluciones por no poder realizar la firma electrónica de manera correcta.
+Se libera esta librería con el fin de facilitar la implementación en ambientes .NET.
 
 
 
@@ -23,7 +23,7 @@ Para poder generar, firmar y emitir documentos electrónicos (facturas y notas d
 * Estar registrado como facturador electrónico
 * Disponer de un certificado digital para la facturación electrónica
 
-Para mayor información ver [DIAN - Facturación Electrónica](https://www.dian.gov.co/fizcalizacioncontrol/herramienconsulta/FacturaElectronica/).
+Para mayor información ver los recursos disponibles en [DIAN - Facturación Electrónica](https://www.dian.gov.co/fizcalizacioncontrol/herramienconsulta/FacturaElectronica/).
 
 
 
@@ -86,7 +86,7 @@ var firma = new FirmaElectronica
 
 Este proyecto utiliza las siguientes librerías:
 
-- [Microsoft.Xades](#) por *Microsoft France*
+- [Microsoft.Xades](#reconocimientos) por *Microsoft France*
 - [BouncyCastle.Crypto](https://www.bouncycastle.org/csharp/) por *The Legion Of The Bouncy Castle*
 - [FirmaXadesNet](https://github.com/ctt-gob-es/FirmaXadesNet) por *el Dpto. de Nuevas Tecnologías de la Dirección General de Urbanismo del Ayto. de Cartagena*
 
@@ -94,7 +94,7 @@ Este proyecto utiliza las siguientes librerías:
 
 ### Contribuir
 
-Aunque este repositorio no es de libre contribución, se puede aportar:
+Aunque este repositorio no es de *Open-Contribution*, se puede aportar:
 
 - Haciendo un fork y enviando las correcciones o actualizaciones necesarias
 - Haciendo una donación económica al autor de este proyecto
@@ -117,4 +117,4 @@ Para mayor información revisar el archivo [LICENCE](LICENCE).
 
 > El autor de este proyecto, por cuestiones de tiempo, no brindará soporte para la implementación al menos que se trate de algo simple (sin estar obligado).
 >
-> Por otra parte, el autor de este proyecto, pone a su disposición una solución .NET completa para la facturación electrónica (generación/firma/emisión/consulta de documentos, creación de PDF's con QR, envío de correos, etc.) así como asesoría para su implementación; estos servicios son de paga.
+> Por otra parte, el autor de este proyecto, pone a su disposición una solución .NET completa de paga para la facturación electrónica (generación/firma/emisión/consulta de documentos, creación de PDF's con QR, envío de correos, etc.) así como asesoría personalizada para su implementación.
