@@ -12,7 +12,7 @@ Desde el 1 de enero del 2019 la facturación electrónica para los contribuyente
 
 Aunque la información técnica proveída por la DIAN debería ser suficiente, encontrar recursos en .NET para este proceso resulta ser bastante difícil. La generación de documentos XML y consumo de servicios web puede ser laborioso pero se puede hacer sin inconvenientes, en cambio la firma requerida por la DIAN puede ser extremadamente difícil de hacer, hasta el punto de ser necesario adquirir soluciones costosas.
 
-Se libera esta librería con el fin de facilitar la implementación en ambientes .NET.
+Se libera esta librería con el objetivo de facilitar la implementación en ambientes .NET.
 
 
 
