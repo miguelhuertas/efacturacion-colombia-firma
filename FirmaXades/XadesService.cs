@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -518,92 +518,97 @@ namespace FirmaXades
             }
         }
         
-        // Crea un 'IssuerName' válido para la DIAN.
         private string createValidIssuerName(X509Certificate2 certificate)
         {
-            var x509Name = new BCx509.X509Name(certificate.IssuerName.Name);
-
-            var oids = x509Name.GetOidList();
-            var vals = x509Name.GetValueList();
-
-            for (int x = 0; x < oids.Count; x++)
+            try
             {
-                var oid = oids[x] as DerObjectIdentifier;
+                var x509Name = new BCx509.X509Name(certificate.IssuerName.Name);
+                var oids = x509Name.GetOidList();
+                var vals = x509Name.GetValueList();
 
-                // verificar oid de email
-                if (oid.Id == BCx509.X509Name.EmailAddress.Id)
+                for (int x = 0; x < oids.Count; x++)
                 {
-                    var val = vals[x] as string;
-                    // codificar a hex si es necesario
-                    if (val != null && val.Length > 0 && val[0] != '#')
+                    var oid = oids[x] as DerObjectIdentifier;
+
+                    // verificar oid de email
+                    if (oid.Id == BCx509.X509Name.EmailAddress.Id)
                     {
-                        var str = new DerIA5String(val);
-                        var eStr = str.GetEncoded();
-                        
-                        val = "#" + BCEncoders.Hex.ToHexString(eStr);
+                        var val = vals[x] as string;
+                        // codificar a hex si es necesario
+                        if (val != null && val.Length > 0 && val[0] != '#')
+                        {
+                            var str = new DerIA5String(val);
+                            var eStr = str.GetEncoded();
+
+                            val = "#" + BCEncoders.Hex.ToHexString(eStr);
+                        }
+
+                        vals[x] = val;
                     }
-                    
-                    vals[x] = val;
                 }
-            }
 
-            var oidSymbols = new Hashtable();
-            oidSymbols.Add(BCx509.X509Name.C, "C");
-            oidSymbols.Add(BCx509.X509Name.O, "O");
-            oidSymbols.Add(BCx509.X509Name.T, "T");
-            oidSymbols.Add(BCx509.X509Name.OU, "OU");
-            oidSymbols.Add(BCx509.X509Name.CN, "CN");
-            oidSymbols.Add(BCx509.X509Name.L, "L");
-            oidSymbols.Add(BCx509.X509Name.ST, "ST");
-            oidSymbols.Add(BCx509.X509Name.SerialNumber, "SERIALNUMBER");
-            //oidSymbols.Add(BCx509.X509Name.EmailAddress, "E"); // ignorar
-            oidSymbols.Add(BCx509.X509Name.DC, "DC");
-            oidSymbols.Add(BCx509.X509Name.UID, "UID");
-            oidSymbols.Add(BCx509.X509Name.Street, "STREET");
-            oidSymbols.Add(BCx509.X509Name.Surname, "SURNAME");
-            oidSymbols.Add(BCx509.X509Name.GivenName, "GIVENNAME");
-            oidSymbols.Add(BCx509.X509Name.Initials, "INITIALS");
-            oidSymbols.Add(BCx509.X509Name.Generation, "GENERATION");
-            oidSymbols.Add(BCx509.X509Name.UnstructuredAddress, "unstructuredAddress");
-            oidSymbols.Add(BCx509.X509Name.UnstructuredName, "unstructuredName");
-            oidSymbols.Add(BCx509.X509Name.UniqueIdentifier, "UniqueIdentifier");
-            oidSymbols.Add(BCx509.X509Name.DnQualifier, "DN");
-            oidSymbols.Add(BCx509.X509Name.Pseudonym, "Pseudonym");
-            oidSymbols.Add(BCx509.X509Name.PostalAddress, "PostalAddress");
-            oidSymbols.Add(BCx509.X509Name.NameAtBirth, "NameAtBirth");
-            oidSymbols.Add(BCx509.X509Name.CountryOfCitizenship, "CountryOfCitizenship");
-            oidSymbols.Add(BCx509.X509Name.CountryOfResidence, "CountryOfResidence");
-            oidSymbols.Add(BCx509.X509Name.Gender, "Gender");
-            oidSymbols.Add(BCx509.X509Name.PlaceOfBirth, "PlaceOfBirth");
-            oidSymbols.Add(BCx509.X509Name.DateOfBirth, "DateOfBirth");
-            oidSymbols.Add(BCx509.X509Name.PostalCode, "PostalCode");
-            oidSymbols.Add(BCx509.X509Name.BusinessCategory, "BusinessCategory");
-            oidSymbols.Add(BCx509.X509Name.TelephoneNumber, "TelephoneNumber");
+                var oidSymbols = new Hashtable();
+                oidSymbols.Add(BCx509.X509Name.C, "C");
+                oidSymbols.Add(BCx509.X509Name.O, "O");
+                oidSymbols.Add(BCx509.X509Name.T, "T");
+                oidSymbols.Add(BCx509.X509Name.OU, "OU");
+                oidSymbols.Add(BCx509.X509Name.CN, "CN");
+                oidSymbols.Add(BCx509.X509Name.L, "L");
+                oidSymbols.Add(BCx509.X509Name.ST, "ST");
+                oidSymbols.Add(BCx509.X509Name.SerialNumber, "SERIALNUMBER");
+                //oidSymbols.Add(BCx509.X509Name.EmailAddress, "E"); // ignorar
+                oidSymbols.Add(BCx509.X509Name.DC, "DC");
+                oidSymbols.Add(BCx509.X509Name.UID, "UID");
+                oidSymbols.Add(BCx509.X509Name.Street, "STREET");
+                oidSymbols.Add(BCx509.X509Name.Surname, "SURNAME");
+                oidSymbols.Add(BCx509.X509Name.GivenName, "GIVENNAME");
+                oidSymbols.Add(BCx509.X509Name.Initials, "INITIALS");
+                oidSymbols.Add(BCx509.X509Name.Generation, "GENERATION");
+                oidSymbols.Add(BCx509.X509Name.UnstructuredAddress, "unstructuredAddress");
+                oidSymbols.Add(BCx509.X509Name.UnstructuredName, "unstructuredName");
+                oidSymbols.Add(BCx509.X509Name.UniqueIdentifier, "UniqueIdentifier");
+                oidSymbols.Add(BCx509.X509Name.DnQualifier, "DN");
+                oidSymbols.Add(BCx509.X509Name.Pseudonym, "Pseudonym");
+                oidSymbols.Add(BCx509.X509Name.PostalAddress, "PostalAddress");
+                oidSymbols.Add(BCx509.X509Name.NameAtBirth, "NameAtBirth");
+                oidSymbols.Add(BCx509.X509Name.CountryOfCitizenship, "CountryOfCitizenship");
+                oidSymbols.Add(BCx509.X509Name.CountryOfResidence, "CountryOfResidence");
+                oidSymbols.Add(BCx509.X509Name.Gender, "Gender");
+                oidSymbols.Add(BCx509.X509Name.PlaceOfBirth, "PlaceOfBirth");
+                oidSymbols.Add(BCx509.X509Name.DateOfBirth, "DateOfBirth");
+                oidSymbols.Add(BCx509.X509Name.PostalCode, "PostalCode");
+                oidSymbols.Add(BCx509.X509Name.BusinessCategory, "BusinessCategory");
+                oidSymbols.Add(BCx509.X509Name.TelephoneNumber, "TelephoneNumber");
 
-            var components = new ArrayList();
+                var components = new ArrayList();
 
-            StringBuilder ava = null;
-            for (int i = 0; i < oids.Count; i++)
-            {
-                ava = new StringBuilder();
-                appendValue(ava, oidSymbols, (DerObjectIdentifier)oids[i], (string)vals[i]);
-
-                components.Add(ava);
-            }
-
-            var buf = new StringBuilder();
-            if (components.Count > 0)
-            {
-                buf.Append(components[0].ToString());
-
-                for (int i = 1; i < components.Count; ++i)
+                StringBuilder ava = null;
+                for (int i = 0; i < oids.Count; i++)
                 {
-                    buf.Append(',');
-                    buf.Append(components[i].ToString());
-                }
-            }
+                    ava = new StringBuilder();
+                    appendValue(ava, oidSymbols, (DerObjectIdentifier)oids[i], (string)vals[i]);
 
-            return buf.ToString();
+                    components.Add(ava);
+                }
+
+                var buf = new StringBuilder();
+                if (components.Count > 0)
+                {
+                    buf.Append(components[0].ToString());
+
+                    for (int i = 1; i < components.Count; ++i)
+                    {
+                        buf.Append(',');
+                        buf.Append(components[i].ToString());
+                    }
+                }
+
+                return buf.ToString();
+            }
+            catch
+            {
+                return certificate.IssuerName.Name;
+            }
         }
 
         private void appendValue(StringBuilder buf, IDictionary oidSymbols, DerObjectIdentifier oid, string val)
