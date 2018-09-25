@@ -2,7 +2,7 @@
 
 [![version](https://img.shields.io/badge/version-0.9.0-blue.svg)](#) [![status](https://img.shields.io/badge/status-working-brightgreen.svg)](#)
 
-**eFacturacionColombia.Firma** es una librería *no oficial* desarrollada en C#, que se encarga de firmar los documentos XML (facturas y notas de débito/crédito) que se presentan a la DIAN de Colombia para el proceso de facturación electrónica.
+**eFacturacionColombia.Firma** es una librería *no oficial* desarrollada en C#, que permite firmar los documentos XML (facturas y notas de débito/crédito) que se presentan a la DIAN de Colombia para el proceso de facturación electrónica.
 
 
 
@@ -12,7 +12,7 @@ Desde el 1 de enero del 2019 la facturación electrónica para los contribuyente
 
 Aunque la información técnica proveída por la DIAN debería ser suficiente, encontrar recursos en .NET para este proceso resulta ser bastante difícil. La generación de documentos XML y consumo de servicios web puede ser laborioso pero se puede hacer sin inconvenientes, en cambio la firma requerida por la DIAN puede ser extremadamente difícil de hacer, hasta el punto de ser necesario adquirir soluciones costosas.
 
-Se libera esta librería con el objetivo de facilitar la implementación en ambientes .NET.
+Se libera esta librería con el objetivo de facilitar la implementación en plataformas .NET.
 
 
 
@@ -65,10 +65,10 @@ File.WriteAllBytes("path/to/signed-factura.xml", bytesFirmados);
 Si la validación técnica de la firma genera el siguiente error (desde el servicio web):
 
 ```
-com.indra.mmdd.signature.exceptions.ValidateException: xades4j.verification.CertRefUtils$1: Verification failed for property 'SigningCertificate': Invalid issue name:
+com.indra.mmdd.signature.exceptions.ValidateException: xades4j.verification.CertRefUtils$1: Verification failed for property 'SigningCertificate': Invalid issue name
 ```
 
-Significa que el *IssuerName* ‒ generado por la librería ‒ de la firma no es válido, en este caso solicitar al proveedor del certificado la cadena válida, y asignarla *manualmente* usando la propiedad `EmisorCertificado` de la clase `FirmaElectronica`:
+Significa que el *CertificateIssuerName* ‒ generado por la librería ‒ de la firma no es válido, en este caso solicitar al proveedor del certificado la cadena válida, y asignarla *manualmente* usando la propiedad `EmisorCertificado` de la clase `FirmaElectronica`:
 
 ```csharp
 var firma = new FirmaElectronica
@@ -96,20 +96,21 @@ Este proyecto utiliza las siguientes librerías:
 
 Aunque este repositorio no es de *Open-Contribution*, se puede aportar:
 
-- Haciendo un fork y enviando las correcciones o actualizaciones necesarias
-- Haciendo una donación económica al autor de este proyecto
+- Reportando detalladamente algún problema
+- Enviando correcciones o actualizaciones necesarias
+- Haciendo una donación al autor de este proyecto
 
 
 
 ### Autor
 
-Miguel Huertas <contacto@miguel-huertas.net> - Freelancer
+Miguel Huertas <contacto@miguel-huertas.net>
 
 
 
 ### Licencia
 
-Para mayor información revisar el archivo [LICENCE](LICENCE).
+Revisar detalles en el archivo [LICENCE](LICENCE).
 
 
 
@@ -117,4 +118,4 @@ Para mayor información revisar el archivo [LICENCE](LICENCE).
 
 > El autor de este proyecto, por cuestiones de tiempo, no brindará soporte para la implementación al menos que se trate de algo simple (sin estar obligado).
 >
-> Por otra parte, el autor de este proyecto, pone a su disposición una solución .NET completa de paga para la facturación electrónica (generación/firma/emisión/consulta de documentos, creación de PDF's con QR, envío de correos, etc.) así como asesoría personalizada para su implementación.
+> **Por otra parte, el autor de este proyecto, pone a su disposición una solución .NET de paga para todo el proceso de facturación electrónica así como asesoría para su implementación**.
