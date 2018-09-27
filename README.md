@@ -29,7 +29,7 @@ Para mayor información ver los recursos disponibles en [DIAN - Facturación Ele
 
 ### Uso
 
-La clase `FirmaElectronica` contiene un sencillo método (en tres variantes) para firmar los documentos:
+La clase `FirmaElectronica` contiene un sencillo método (en tres variantes) para firmar los documentos electrónicos, que retorna el array de bytes resultante:
 
 ```csharp
 using eFacturacionColombia;
@@ -46,20 +46,23 @@ var firma = new FirmaElectronica
 // usar horario colombiano
 var fecha = DateTimeHelper.GetColombianDate();
 
+// variante 1:
 // firmar archivo
 var archivoXml = new FileInfo("path/to/unsigned-factura.xml");
-var archivoFirmado = firma.Firmar(archivoXml, TipoDocumento.FACTURA, fecha);
+var bytesArchivoFirmado = firma.Firmar(archivoXml, TipoDocumento.FACTURA, fecha);
 
+// variante 2:
 // firmar contenido
 var contenidoXml = "<?xml ...";
-var contenidoFirmado = firma.Firmar(contenidoXml, TipoDocumento.FACTURA, fecha);
+var bytesContenidoFirmado = firma.Firmar(contenidoXml, TipoDocumento.FACTURA, fecha);
 
+// variante 3:
 // firmar bytes
 var bytesXml = new byte[13042];
-var bytesFirmados = firma.Firmar(bytesXml, TipoDocumento.FACTURA, fecha);
+var bytesXmlFirmado = firma.Firmar(bytesXml, TipoDocumento.FACTURA, fecha);
 
 // guardar xml (opcional)
-File.WriteAllBytes("path/to/signed-factura.xml", bytesFirmados);
+File.WriteAllBytes("path/to/signed-factura.xml", bytesXmlFirmado);
 ```
 
 Si la validación técnica de la firma genera el siguiente error (desde el servicio web):
@@ -79,6 +82,10 @@ var firma = new FirmaElectronica
 	EmisorCertificado = "C=CO,L=Bogota D.C.,O=..."
 };
 ```
+
+
+
+**Nota:** Los bytes resultantes del proceso no se deben modificar (pasándolos a otra codificación o cargándolos en un `XmlDocument`) antes de guardarlos o comprimirlos para enviarlos a la DIAN porque invalidarán la firma.
 
 
 
