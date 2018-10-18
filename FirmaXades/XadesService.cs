@@ -65,7 +65,6 @@ namespace FirmaXades
                     SetContentExternallyDetached(signatureDocument, parameters.ExternalContentUri);
                     break;
             }
-            SetSignatureId(signatureDocument.XadesSignature);
             PrepareSignature(signatureDocument, parameters);
             ComputeSignature(signatureDocument);
             signatureDocument.UpdateDocument();
@@ -112,7 +111,6 @@ namespace FirmaXades
             {
                 signatureDocument.XadesSignature.SignatureNodeDestination = ((XmlDocument)parentNode).DocumentElement;
             }
-            SetSignatureId(signatureDocument.XadesSignature);
             PrepareSignature(signatureDocument, parameters);
             ComputeSignature(signatureDocument);
             signatureDocument.UpdateDocument();
@@ -130,7 +128,8 @@ namespace FirmaXades
             signatureDocument.Document = (XmlDocument)sigDocument.Document.Clone();
             signatureDocument.Document.PreserveWhitespace = true;
             XadesSignedXml xadesSignedXml = new XadesSignedXml(signatureDocument.Document);
-            SetSignatureId(xadesSignedXml);
+            xadesSignedXml.Signature.Id = "xmldsig-" + Guid.NewGuid().ToString();
+            xadesSignedXml.SignatureValueId = sigDocument.XadesSignature.Signature.Id + "-sigvalue";
             xadesSignedXml.SigningKey = parameters.Signer.SigningKey;
             _refContent = new Reference();
             _refContent.Uri = "#" + sigDocument.XadesSignature.SignatureValueId;
@@ -213,13 +212,6 @@ namespace FirmaXades
             SignatureDocument.CheckSignatureDocument(sigDocument);
             XadesValidator xadesValidator = new XadesValidator();
             return xadesValidator.Validate(sigDocument);
-        }
-
-        private void SetSignatureId(XadesSignedXml xadesSignedXml)
-        {
-            string text = Guid.NewGuid().ToString();
-            xadesSignedXml.Signature.Id = "xmldsig-ab2df1fb-1819-413d-8b8c-79e9ed75638a";
-            xadesSignedXml.SignatureValueId = xadesSignedXml.Signature.Id + "-sigvalue";
         }
 
         private void SetContentInternallyDetached(SignatureDocument sigDocument, XmlDocument xmlDocument, string elementId, string mimeType)
@@ -385,9 +377,13 @@ namespace FirmaXades
         private void SetContentEnveloped(SignatureDocument sigDocument, XmlDocument xmlDocument)
         {
             sigDocument.Document = xmlDocument;
-            _refContent = new Reference();
+
             sigDocument.XadesSignature = new XadesSignedXml(sigDocument.Document);
-            _refContent.Id = "xmldsig-ab2df1fb-1819-413d-8b8c-79e9ed75638a-ref0";
+            sigDocument.XadesSignature.Signature.Id = "xmldsig-" + Guid.NewGuid().ToString();
+            sigDocument.XadesSignature.SignatureValueId = sigDocument.XadesSignature.Signature.Id + "-sigvalue";
+
+            _refContent = new Reference();
+            _refContent.Id = sigDocument.XadesSignature.Signature.Id + "-ref0";
             _refContent.Uri = "";
             _mimeType = "text/xml";
             _encoding = "UTF-8";
