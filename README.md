@@ -1,6 +1,6 @@
 # eFacturacionColombia.Firma (C#)
 
-[![version](https://img.shields.io/badge/version-0.9.0-blue.svg)](#) [![status](https://img.shields.io/badge/status-working-brightgreen.svg)](#)
+[![version](https://img.shields.io/badge/version-0.9.1-blue.svg)](#) [![status](https://img.shields.io/badge/status-working-brightgreen.svg)](#)
 
 **eFacturacionColombia.Firma** es una librería *no oficial* desarrollada en C#, que permite firmar los documentos XML (facturas y notas de débito/crédito) que se presentan a la DIAN de Colombia para el proceso de facturación electrónica.
 
