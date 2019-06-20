@@ -1,3 +1,5 @@
+> **Esta versión ha quedado obsoleta; para implementar la firma de la versión Validación Previa, usar el módulo [eFacturacionColombia_V2.Firma](https://github.com/miguelhuertas/eFacturacionColombia_V2.Firma)**.
+
 # eFacturacionColombia.Firma (C#)
 
 [![version](https://img.shields.io/badge/version-0.9.1-blue.svg)](#) [![status](https://img.shields.io/badge/status-working-brightgreen.svg)](#)
